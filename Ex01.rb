@@ -1,6 +1,6 @@
-Problem: Find the number of violations in each violation category
+#Problem: Find the number of violations in each violation category
 
-```ruby
+# ```ruby
 violations = [ {money_owed: 50.0, violation_category: "Garbage and Refuse", date: "2012-11-01 00:00:00", inspection_id: "232528"},
 {money_owed: 10.0, violation_category: "Unsanitary Conditions", date: "2012-12-26 00:00:00", inspection_id: "230544"},
 {money_owed: 55.0, violation_category: "Garbage and Refuse", date: "2012-12-26 00:00:00", inspection_id: "230543"},
@@ -153,7 +153,36 @@ violations = [ {money_owed: 50.0, violation_category: "Garbage and Refuse", date
 {money_owed: 70.0, violation_category: "Vegetation", date: "2012-09-19 00:00:00", inspection_id: "223815"},
 {money_owed: 36.0, violation_category: "Unsanitary Conditions", date: "2012-09-19 00:00:00", inspection_id: "223814"},
 {money_owed: 44.0, violation_category: "Garbage and Refuse", date: "2012-09-19 00:00:00", inspection_id: "223813"} ]
-```
+# ```
 
-Problem: Find the total money owed for each violation category
+#Problem: Find the total money owed for each violation category
 
+# making sure i get all the categorys
+# i could have just made an array
+def get_categorys(array)
+    new_array = []
+ array.each do |item|
+new_array << item[:violation_category]
+ end
+ return new_array.uniq
+end
+
+# creating a hashe for all catagorys
+def hash_for_violations(array)
+hash = {}
+array.each do |violation|
+hash[violation] = 0.0
+end
+return hash
+end
+
+# adding all the numbers to my new hash
+def add_all (list) 
+    total = hash_for_violations(get_categorys(list))
+ list.each do |violation|
+total[violation[:violation_category]]  += violation[:money_owed]
+ end
+return total
+end
+
+puts add_all(violations)
