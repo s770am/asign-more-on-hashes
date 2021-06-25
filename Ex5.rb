@@ -24,13 +24,15 @@ gameData = [
         { "name"=> "Kiwi", "location"=> "LA", "status"=> "expert" }
       ]
     },
+
+    
     {
       "pubG"=> [
         { "name"=> "Peter", "location"=> "Toronto", "status"=> "expert" },
         { "name"=> "Sree", "location"=> "Alberta", "status"=> "Awesome" },
         { "name"=> "Sandra", "location"=> "Neverland", "status"=> "newbie" },
         { "name"=>"Elton", "location"=> "New Delhi", "status"=> "Awesome" },
-        { "name"=> "Kmen", "location"=> "Neverland", "status"=> "newbie" }
+        { "name"=> "Kmen", "location"=> "Neverland", "status"=> "newbie" },
         { "name"=> "Evlyn", "location"=> "Zurich", "status"=> "expert" },
         { "name"=> "Kiwi", "location"=> "Mexico", "status"=> "expert" }
       ]
@@ -51,4 +53,42 @@ gameData = [
   }
   # the array continues for all the remaining user.
 ]
-  
+
+def set_up (array, names) 
+names.each do |name|
+array << {"name"=> name, "games"=> [], "location"=> []}
+end
+end
+
+def name_matcher(array, to_be_added)
+array.each_with_index do |person, index|
+  if person["name"] == to_be_added["name"]
+    return index
+  end
+end
+puts "we've got an error"
+return false
+end
+
+def data_reformater(array, players)
+#  Create outer array of my array
+new_array = []
+# add names and games outer box for the array
+set_up(new_array, players)
+# go in to game layer outer box
+ array.each_with_index do |game_outer|
+  # go in to the score
+game_outer[game_outer.keys[0]].each do |score|
+  # Create inner game hash and add to player
+new_hash = {"name"=>game_outer.keys, "status"=>score["status"]}
+# find the right person and add
+person = new_array[name_matcher(new_array, score)] 
+person["games"] << new_hash
+person["location"] << score["location"]
+end
+ end
+ # returns final result
+   return new_array 
+end
+
+p data_reformater(gameData, players)
