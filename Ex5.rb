@@ -90,5 +90,5 @@ end
  # returns final result
    return new_array 
 end
-
+puts "the amount of arrays and hashes that you included in the data seem very unnessary :("
 p data_reformater(gameData, players)
