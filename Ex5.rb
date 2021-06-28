@@ -54,10 +54,12 @@ gameData = [
   # the array continues for all the remaining user.
 ]
 
-def set_up (array, names) 
+def set_up ( names) 
+  array = []
 names.each do |name|
 array << {"name"=> name, "games"=> [], "location"=> []}
 end
+return array
 end
 
 def name_matcher(array, to_be_added)
@@ -72,9 +74,9 @@ end
 
 def data_reformater(array, players)
 #  Create outer array of my array
-new_array = []
+new_array = set_up( players)
 # add names and games outer box for the array
-set_up(new_array, players)
+# set_up(new_array, players)
 # go in to game layer outer box
  array.each_with_index do |game_outer|
   # go in to the score
@@ -83,6 +85,7 @@ game_outer[game_outer.keys[0]].each do |score|
 new_hash = {"name"=>game_outer.keys, "status"=>score["status"]}
 # find the right person and add
 person = new_array[name_matcher(new_array, score)] 
+#person = new_array[name_matcher(new_array, score)] 
 person["games"] << new_hash
 person["location"] << score["location"]
 end
